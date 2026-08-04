@@ -1,0 +1,49 @@
+## Ignore Visual Studio temporary files, build results, and user settings
+## See https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Re]leases/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bbin/
+bin/
+obj/
+_ReSharper*/
+[Tt]est[Rr]esults*/
+
+# Visual Studio 2015/2017/2019/2022 cache directories
+.vs/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.usermd
+*.userprefs
+*.sln.docstates
+
+# Mono Class Library
+*.suo
+*.user
+*.userprefs
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+
+# Operating System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Docker
+.dockerignore
