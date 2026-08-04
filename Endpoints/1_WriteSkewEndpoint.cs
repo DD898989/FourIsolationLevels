@@ -79,7 +79,7 @@ public static class WriteSkewEndpoint
                         mres2.Set();
                         if (!mres3.Wait(4000))
                         {
-                            logs.Add("[交易 B] 等待交易 A 提交超時（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止 交易B 讀取該筆資料）。");
+                            logs.Add("[交易 B] 等待交易 A 提交超時（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止 交易A update 該筆資料）。");
                             logs.Close();
                             return;
                         }

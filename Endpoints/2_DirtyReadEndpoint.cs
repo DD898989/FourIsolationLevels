@@ -37,7 +37,7 @@ public static class DirtyReadEndpoint
                         mres1.Set();
                         if (!mres2.Wait(4000))
                         {
-                            logs.Add($"[交易 A] 等待交易 B 更新逾時（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止 交易B 讀取該筆資料）。");
+                            logs.Add($"[交易 A] 等待交易 B 更新逾時（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止 交易B update該筆資料）。");
                             logs.Close();
                             mres3.Set();
                             return;

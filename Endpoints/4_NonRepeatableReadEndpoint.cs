@@ -37,7 +37,7 @@ public static class NonRepeatableReadEndpoint
 
                         if (!mres2.Wait(4000))
                         {
-                            logs.Add("[交易 A] 等待交易 B 提交超時，可能發生死鎖！（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止交易 B 修改該筆資料）。");
+                            logs.Add("[交易 A] 等待交易 B 提交超時，可能發生死鎖！（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止交易 B update 該筆資料）。");
                             logs.Close();
                             return;
                         }

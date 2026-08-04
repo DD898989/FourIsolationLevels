@@ -41,7 +41,7 @@ public static class PhantomReadEndpoint
 
                         if (!mres2.Wait(4000))
                         {
-                            logs.Add("[交易 A] 等待交易 B 提交超時，可能發生死鎖！（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止 交易B 讀取該筆資料）。");
+                            logs.Add("[交易 A] 等待交易 B 提交超時，可能發生死鎖！（在 Serializable 隔離層級下，此為正常的鎖定阻塞現象，代表成功阻止 交易B Insert資料）。");
                             logs.Close();
                             return;
                         }
