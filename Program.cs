@@ -14,12 +14,10 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // 註冊 IDbContextFactory 用於多執行緒背景併發任務
+var serverVersion = new MariaDbServerVersion(new Version(10, 11, 0));
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseMySql(connectionString, serverVersion));
 
-// 註冊標準 DbContext 用於端點的一般依賴注入
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // 註冊 OpenAPI 服務
 builder.Services.AddOpenApi(options =>

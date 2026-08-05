@@ -10,8 +10,8 @@ RUN dotnet restore "MyApiApp.csproj"
 COPY . .
 RUN dotnet publish "MyApiApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# 使用 ASP.NET Core 10.0 執行階段映像檔
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+# 使用 ASP.NET Core 10.0 Alpine 執行階段映像檔(體積更小、記憶體佔用更低)
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
 WORKDIR /app
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080

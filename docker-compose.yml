@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   mysql:
-    image: mysql:8.0
+    image: mariadb:10.11
     container_name: mysql
     restart: always
     ports:          #]
@@ -10,10 +8,30 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: isolation_db
-    ports:
-      - "3306:3306"
+    command: >
+      --innodb-buffer-pool-size=12M
+      --innodb-buffer-pool-instances=1
+      --innodb-doublewrite=0
+      --innodb-log-file-size=8M
+      --innodb-flush-log-at-trx-commit=2
+      --key-buffer-size=8M
+      --performance-schema=OFF
+      --skip-name-resolve
+      --skip-log-bin
+      --max-connections=3
+      --table-open-cache=64
+      --thread-cache-size=2
+      --innodb-read-io-threads=1
+      --innodb-write-io-threads=1
+      --innodb-purge-threads=1
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
 
   my-app:
     build:
@@ -24,7 +42,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - ConnectionStrings__DefaultConnection=Server=mysql;Database=isolation_db;Uid=root;Pwd=rootpassword;Port=3306;AllowUserVariables=true;
+      - ConnectionStrings__DefaultConnection=Server=mysql;Database=isolation_db;Uid=root;Pwd=rootpassword;Port=3306;AllowUserVariables=true;MaximumPoolSize=3;SslMode=None;
+      - DOTNET_gcServer=0
+      - DOTNET_gcConcurrent=0
+      - DOTNET_GCHeapHardLimitMB=100
+      - DOTNET_TieredPGO=0
+      - DOTNET_EnableDiagnostics=0
     depends_on:
       mysql:
         condition: service_healthy
