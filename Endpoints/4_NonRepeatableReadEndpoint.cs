@@ -62,7 +62,7 @@ public static class NonRepeatableReadEndpoint
                         acc.Balance = 700;
                         db.SaveChanges();
                         tx.Commit();
-                        logs.Add("[交易 B] 已將帳戶 5 的餘額修改為 700.00 並已提交 Commit。");
+                        logs.Add("[交易 B] 已將帳戶 5 的餘額修改為 700 並已提交 Commit。");
 
                         mres2.Set();
                     }
@@ -74,7 +74,7 @@ public static class NonRepeatableReadEndpoint
             bool hasNonRepeatableRead = logs.ToList().Any(l => l.Contains("第一次查詢") && l.Contains("1000")) &&
                                         logs.ToList().Any(l => l.Contains("第二次查詢") && l.Contains("700"));
             if (hasNonRepeatableRead)
-                logs.Add("--> 結論：不可重複讀 (Non-Repeatable Read) 發生了！帳戶 5 的餘額在交易 A 的兩次讀取中從 1000.00 變成了 700.00，產生了資料不一致。");
+                logs.Add("--> 結論：不可重複讀 (Non-Repeatable Read) 發生了！帳戶 5 的餘額在交易 A 的兩次讀取中從 1000 變成了 700，產生了資料不一致。");
             else
                 logs.Add("--> 結論：不可重複讀 (Non-Repeatable Read) 已成功被防止！交易 A 重複查詢得到的餘額保持一致. ");
 

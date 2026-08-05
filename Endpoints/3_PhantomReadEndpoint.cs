@@ -72,7 +72,7 @@ public static class PhantomReadEndpoint
                         db.Accounts.Add(new Account { Id = 2, Balance = 9999 });
                         db.SaveChanges();
                         tx.Commit();
-                        logs.Add("[交易 B] 成功寫入新帳戶 2 (餘額 = 9999.00) 並已提交 Commit。");
+                        logs.Add("[交易 B] 成功寫入新帳戶 2 (餘額 = 9999) 並已提交 Commit。");
 
                         mres2.Set();
                     }

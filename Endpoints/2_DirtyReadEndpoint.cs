@@ -70,7 +70,7 @@ public static class DirtyReadEndpoint
                         var acc = db.Accounts.First(a => a.Id == 1);
                         acc.Balance = 800;
                         db.SaveChanges();
-                        logs.Add("[交易 B] 已將帳戶 1 的餘額修改為 800.00 (未提交)");
+                        logs.Add("[交易 B] 已將帳戶 1 的餘額修改為 800 (未提交)");
 
                         mres2.Set();
                         mres3.Wait(30000);
@@ -85,9 +85,9 @@ public static class DirtyReadEndpoint
 
             bool hasDirtyRead = logs.ToList().Any(l => l.Contains("第二次查詢") && l.Contains("800"));
             if (hasDirtyRead)
-                logs.Add("--> 結論：髒讀 (Dirty Read) 發生了！交易 A 成功讀取到交易 B 尚未提交的暫時性資料 (800.00)。");
+                logs.Add("--> 結論：髒讀 (Dirty Read) 發生了！交易 A 成功讀取到交易 B 尚未提交的暫時性資料 (800)。");
             else
-                logs.Add("--> 結論：髒讀 (Dirty Read) 已成功被防止！交易 A 僅能讀取到已被 Commit 提交的正確資料 (1000.00)。");
+                logs.Add("--> 結論：髒讀 (Dirty Read) 已成功被防止！交易 A 僅能讀取到已被 Commit 提交的正確資料 (1000)。");
 
             return Results.Text(string.Join("\n", logs.ToList()), "text/plain; charset=utf-8");
         })
