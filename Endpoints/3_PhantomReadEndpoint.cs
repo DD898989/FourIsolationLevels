@@ -46,9 +46,9 @@ public static class PhantomReadEndpoint
                             return;
                         }
 
-                        // 第二次查詢 (在 MySQL RepeatableRead 隔離層級下，一般的 SELECT 藉由 MVCC 快照讀可防範幻讀。若要演示幻讀發生，需使用 FOR SHARE 進行當前讀以讀取最新提交的資料)
+                        // 第二次查詢 (在 MySQL/MariaDB RepeatableRead 隔離層級下，一般的 SELECT 藉由 MVCC 快照讀可防範幻讀。若要演示幻讀發生，需使用 LOCK IN SHARE MODE 進行當前讀以讀取最新提交的資料)
                         var count2 = db.Database.SqlQueryRaw<int>(
-                            "SELECT COUNT(*) AS Value FROM Accounts WHERE Balance >= 5000 AND Balance <= 10000 FOR SHARE"
+                            "SELECT COUNT(*) AS Value FROM Accounts WHERE Balance >= 5000 AND Balance <= 10000 LOCK IN SHARE MODE"
                         ).AsEnumerable().First();
                         logs.Add($"[交易 A] 第二次查詢: 符合範圍的帳戶數量 = {count2}");
 
