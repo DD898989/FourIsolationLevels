@@ -16,7 +16,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // 註冊 IDbContextFactory 用於多執行緒背景併發任務
 var serverVersion = new MariaDbServerVersion(new Version(10, 11, 0));
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
-    options.UseMySql(connectionString, serverVersion));
+    options.UseMySql(connectionString, serverVersion)
+           .AddInterceptors(new RawSqlLoggingInterceptor(), new TransactionLoggingInterceptor()));
 
 
 // 註冊 OpenAPI 服務

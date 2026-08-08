@@ -37,6 +37,7 @@ public class ConcurrentList<T>
         {
             if (_isClosed) return;
             _list.Add(item);
+            Console.WriteLine($"----------------------------------------------------------------------------------------------------------【TID:{Environment.CurrentManagedThreadId}】---{item}");
         }
     }
 
