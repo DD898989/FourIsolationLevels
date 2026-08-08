@@ -72,11 +72,22 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/openapi/v1.json", "v1");
 });
 
-// 使用 .NET 10 擴充方法樣式映射 Minimal API 端點
-app.MapWriteSkewEndpoint();
-app.MapDirtyReadEndpoint();
-app.MapPhantomReadEndpoint();
-app.MapNonRepeatableReadEndpoint();
+// 映射 Minimal API 端點
+app.MapGet("/api/write-skew", WriteSkewEndpoint.Handle)
+   .WithSummary("1. 寫偏斜 (Write Skew) 演示")
+   .WithDescription(WriteSkewEndpoint.Description);
+
+app.MapGet("/api/dirty-read", DirtyReadEndpoint.Handle)
+   .WithSummary("2. 髒讀 (Dirty Read) 演示")
+   .WithDescription(DirtyReadEndpoint.Description);
+
+app.MapGet("/api/phantom-read", PhantomReadEndpoint.Handle)
+   .WithSummary("3. 幻讀 (Phantom Read) 演示")
+   .WithDescription(PhantomReadEndpoint.Description);
+
+app.MapGet("/api/non-repeatable-read", NonRepeatableReadEndpoint.Handle)
+   .WithSummary("4. 不可重複讀 (Non-Repeatable Read) 演示")
+   .WithDescription(NonRepeatableReadEndpoint.Description);
 
 // 註冊原始碼檔案下載端點
 app.MapGet("/api/download/{fileName}", (string fileName) =>
